@@ -1,12 +1,15 @@
 import java.util.HashMap;
+import java.util.Locale;
 
 public class RomanNumeralConverter {
 
-    public static int convertRomanNumber(String romanNumeral) {
+    public static int convertRomanNumber(String number) {
+        isNumberEqualNullOrBlank(number);
+        String  romanNumeralWithoutWhiteSpaces = number.replaceAll(" ","").toUpperCase(Locale.ROOT);
 
-        validRomanNumber(romanNumeral );
+        validRomanNumber(romanNumeralWithoutWhiteSpaces);
 
-        char[] symbols = romanNumeral .toCharArray();
+        char[] symbols = romanNumeralWithoutWhiteSpaces.toCharArray();
         int numberAsInt = 0;
 
         for (int i = 0; i < symbols.length; i++) {
@@ -65,8 +68,8 @@ public class RomanNumeralConverter {
                             }
                         }
 
-                        if (isCharacterReplayToManyTimes(s, counter, 3, "C", "X", "I") ||
-                                isCharacterReplayToManyTimes(s, counter, 1, "D", "V", "L")) {
+                        if (isCharacterReplayToManyTimes(s, counter, 3, "C", "X", "I", "M") ||
+                                isCharacterReplayToManyTimes(s, counter, 1, "D", "V", "L", null)) {
                             {
                                 throwException("Too many repetitions of a character " + s + " .The number " + number + " is not valid.");
                             }
@@ -76,8 +79,8 @@ public class RomanNumeralConverter {
         );
     }
 
-    private static boolean isCharacterReplayToManyTimes(String s, int counter, int allowableNumberOfRepetitions, String c, String x, String i) {
-        return counter > allowableNumberOfRepetitions && (s.equals(c) || s.equals(x) || s.equals(i));
+    private static boolean isCharacterReplayToManyTimes(String s, int counter, int allowableNumberOfRepetitions, String c, String x, String i, String m) {
+        return counter > allowableNumberOfRepetitions && (s.equals(c) || s.equals(x) || s.equals(i) || s.equals(m));
     }
 
     private static void throwException(String message) {
@@ -88,6 +91,21 @@ public class RomanNumeralConverter {
         hasValidCharacters(roman);
         hasCharactersCorrectRepetitions(roman);
         hasCharacterCorrectOrder(roman);
+        isNegativeNumber(roman);
+    }
+
+    public static void isNumberEqualNullOrBlank(String roman){
+        if(roman == null){
+            throw new NullPointerException("The number can not be null.");
+        } else if (roman.isBlank()) {
+            throw new RuntimeException("The number can not be blank.");
+        }
+    }
+
+    public static void isNegativeNumber(String roman){
+        if(roman.charAt(0) == '-'){
+            throw new RuntimeException("The number roman can not be negative.");
+        }
     }
 
 }

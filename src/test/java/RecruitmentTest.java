@@ -25,6 +25,15 @@ public class RecruitmentTest {
 
         int result5 = RomanNumeralConverter.convertRomanNumber("XLIV");
         Assert.assertEquals(44, result5);
+
+        int result6 = RomanNumeralConverter.convertRomanNumber("xliv");
+        Assert.assertEquals(44, result6);
+
+        int result7 = RomanNumeralConverter.convertRomanNumber("x l i v");
+        Assert.assertEquals(44, result7);
+
+        int result8 = RomanNumeralConverter.convertRomanNumber("       xli v");
+        Assert.assertEquals(44, result8);
     }
 
     @Test
@@ -51,4 +60,22 @@ public class RecruitmentTest {
         assertEquals("Too many repetitions of a character I .The number IIIIMCMXCIXX is not valid.", exception.getMessage());
     }
 
+    @Test
+    @DisplayName("Test assert is number null or blank")
+    void testIsNumberEqualNullOrBlank() {
+
+        RuntimeException exception1 = assertThrows(RuntimeException.class, () -> RomanNumeralConverter.isNumberEqualNullOrBlank(null));
+        assertEquals("The number can not be null.", exception1.getMessage());
+
+        RuntimeException exception2 = assertThrows(RuntimeException.class, () -> RomanNumeralConverter.isNumberEqualNullOrBlank("    "));
+        assertEquals("The number can not be blank.", exception2.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test assert is number negative")
+    void testIsNegativeNumber() {
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> RomanNumeralConverter.isNegativeNumber("-XX"));
+        assertEquals("The number roman can not be negative.", exception.getMessage());
+    }
 }
