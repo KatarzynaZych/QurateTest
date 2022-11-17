@@ -5,11 +5,10 @@ public class RomanNumeralConverter {
 
     public static int convertRomanNumber(String number) {
         isNumberEqualNullOrBlank(number);
-        String  romanNumeralWithoutWhiteSpaces = number.replaceAll(" ","").toUpperCase(Locale.ROOT);
+        String  refactoredRomanNumber = number.replaceAll(" ","").toUpperCase(Locale.ROOT);
+        validRomanNumber(refactoredRomanNumber);
 
-        validRomanNumber(romanNumeralWithoutWhiteSpaces);
-
-        char[] symbols = romanNumeralWithoutWhiteSpaces.toCharArray();
+        char[] symbols = refactoredRomanNumber.toCharArray();
         int numberAsInt = 0;
 
         for (int i = 0; i < symbols.length; i++) {
