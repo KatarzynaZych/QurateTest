@@ -5,7 +5,7 @@ public class RomanNumeralConverter {
 
     public static int convertRomanNumber(String number) {
         isNumberEqualNullOrBlank(number);
-        String  refactoredRomanNumber = number.replaceAll(" ","").toUpperCase(Locale.ROOT);
+        String refactoredRomanNumber = number.replaceAll(" ", "").toUpperCase(Locale.ROOT);
         validRomanNumber(refactoredRomanNumber);
 
         char[] symbols = refactoredRomanNumber.toCharArray();
@@ -93,16 +93,16 @@ public class RomanNumeralConverter {
         isNegativeNumber(roman);
     }
 
-    public static void isNumberEqualNullOrBlank(String roman){
-        if(roman == null){
+    public static void isNumberEqualNullOrBlank(String roman) {
+        if (roman == null) {
             throw new NullPointerException("The number can not be null.");
         } else if (roman.isBlank()) {
             throw new RuntimeException("The number can not be blank.");
         }
     }
 
-    public static void isNegativeNumber(String roman){
-        if(roman.charAt(0) == '-'){
+    public static void isNegativeNumber(String roman) {
+        if (roman.charAt(0) == '-') {
             throw new RuntimeException("The number roman can not be negative.");
         }
     }
