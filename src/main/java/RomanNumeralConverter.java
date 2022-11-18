@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 public class RomanNumeralConverter {
 
@@ -27,7 +29,7 @@ public class RomanNumeralConverter {
         return numberAsInt;
     }
 
-    private static HashMap<String, Integer> romanMap = new HashMap<String, Integer>() {{
+    private static HashMap<String, Integer> romanMap = new HashMap<>() {{
         put("M", 1000);
         put("D", 500);
         put("C", 100);
@@ -45,6 +47,114 @@ public class RomanNumeralConverter {
         }
     }
 
+    private static void checkIfCharacterRepeated(String previous, String current, String character) {
+        if (previous.equals(character) && current.equals(character)) {
+            throwException("The number contains to many number of repetitions of " + character + " characters.");
+        }
+    }
+
+    public static void hasTwoTheSameIncorrectCharactersNextToEachOther(String number) {
+        if (number.length() > 2) {
+            for (int i = 0; i < number.length() - 2; i++) {
+                String previous = String.valueOf(number.charAt(i));
+                String current = String.valueOf(number.charAt(i + 1));
+                String next = String.valueOf(number.charAt(i + 2));
+
+                if (!(previous.equals(current) && current.equals(next))) {
+                    switch (next) {
+                        case "X":
+                        case "V":
+                            checkIfCharacterRepeated(previous, current, "I");
+                            break;
+                        case "L":
+                        case "C":
+                            checkIfCharacterRepeated(previous, current, "X");
+                            break;
+                        case "D":
+                        case "M":
+                            checkIfCharacterRepeated(previous, current, "C");
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void checkCharactersHasProperAntecedent(String number) {
+        for (int i = 0; i < number.length() - 1; i++) {
+            String currentCharacter = String.valueOf(number.charAt(i));
+            String antecedentCharacter = String.valueOf(number.charAt(i + 1));
+
+            switch (currentCharacter) {
+                case "I":
+                    validationForCharacterI(number, antecedentCharacter);
+                    break;
+                case "V":
+                    validationForCharacterV(number, antecedentCharacter);
+                    break;
+                case "X":
+                    validationForCharacterX(number, antecedentCharacter);
+                    break;
+                case "L":
+                    validationForCharacterL(number, antecedentCharacter);
+                    break;
+                case "D":
+                    validationForCharacterD(number, antecedentCharacter);
+                    break;
+            }
+        }
+    }
+
+    private static void validationForCharacterD(String number, String antecedentCharacter) {
+        if ("M".equals(antecedentCharacter)) {
+            throwException("The number " + number + " does not contain valid characters.");
+        }
+    }
+
+    private static void validationForCharacterL(String number, String antecedentCharacter) {
+        if (!("I".equals(antecedentCharacter) || "V".equals(antecedentCharacter) || "X".equals(antecedentCharacter))) {
+            throwException("The number " + number + " does not contain valid characters.");
+        }
+    }
+
+    private static void validationForCharacterI(String number, String antecedentCharacter) {
+        if (!("X".equals(antecedentCharacter) || "I".equals(antecedentCharacter) || "V".equals(antecedentCharacter))) {
+            throwException("The number " + number + " does not contain valid characters.");
+        }
+    }
+
+    private static void validationForCharacterX(String number, String antecedentCharacter) {
+        if (("M".equals(antecedentCharacter) || "D".equals(antecedentCharacter))) {
+            throwException("The number " + number + " does not contain valid characters.");
+        }
+    }
+
+    private static void validationForCharacterV(String number, String antecedentCharacter) {
+        if (!"I".equals(antecedentCharacter)) {
+            throwException("The number " + number + " does not contain valid characters.");
+        }
+    }
+
+
+    public static void checkRepeatedCharacterPairs(String number) {
+        String newString = number;
+        Set<String> pairSet = new HashSet<>();
+
+        if (number.length() % 2 != 0) {
+            newString = number.substring(1);
+        }
+
+        for (int i = 0; i < newString.length(); i += 2) {
+            String currentPair = newString.substring(i, i + 2);
+            if (!pairSet.contains(currentPair)) {
+                pairSet.add(currentPair);
+            } else {
+                throwException("The number " + number + " has repeared characters pairs.");
+            }
+        }
+
+    }
+
     public static void hasCharacterCorrectOrder(String number) {
         for (int i = 0; i < number.length() - 1; i++) {
             String current = String.valueOf(number.charAt(i));
@@ -54,6 +164,7 @@ public class RomanNumeralConverter {
             }
         }
     }
+
 
     public static void hasCharactersCorrectRepetitions(String number) {
         romanMap.keySet().forEach(
@@ -91,6 +202,10 @@ public class RomanNumeralConverter {
         hasCharactersCorrectRepetitions(roman);
         hasCharacterCorrectOrder(roman);
         isNegativeNumber(roman);
+        checkCharactersHasProperAntecedent(roman);
+        checkRepeatedCharacterPairs(roman);
+        hasTwoTheSameIncorrectCharactersNextToEachOther(roman);
+
     }
 
     public static void isNumberEqualNullOrBlank(String roman) {

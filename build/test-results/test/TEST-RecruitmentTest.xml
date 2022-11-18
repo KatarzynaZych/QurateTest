@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="RecruitmentTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2022-11-17T18:12:30" hostname="DESKTOP-F2CBTNQ" time="0.029">
+<testsuite name="RecruitmentTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-18T14:40:39" hostname="DESKTOP-F2CBTNQ" time="0.013">
   <properties/>
-  <testcase name="Test assert has Characters Correct Repetitions" classname="RecruitmentTest" time="0.02"/>
-  <testcase name="Test assert has Valid Characters" classname="RecruitmentTest" time="0.003"/>
-  <testcase name="Test assert is number negative" classname="RecruitmentTest" time="0.001"/>
-  <testcase name="Test assert is number null or blank" classname="RecruitmentTest" time="0.001"/>
-  <testcase name="Test assert converting Roman Number" classname="RecruitmentTest" time="0.002"/>
-  <testcase name="Test assert has Character Correct Order" classname="RecruitmentTest" time="0.001"/>
+  <testcase name="Test assert converting Roman Number" classname="RecruitmentTest" time="0.013"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
